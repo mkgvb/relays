@@ -13,7 +13,7 @@ ON = GPIO.LOW
 OFF = GPIO.HIGH
 
 def loadConfig():
-    with open("/home/pi/relays_module/relays/config.yml", "r") as stream:
+    with open("/home/pi/relays/module/relays/config.yml", "r") as stream:
         try:
             relays = yaml.safe_load(stream)
             return relays
@@ -52,6 +52,7 @@ class Relays:
                 print("Overrides: {}".format([r.get("override", None) for r in self.relays]))
                 minute = datetime.datetime.now().minute
             time.sleep(1)
+
 
 
     def process(self):
@@ -95,7 +96,7 @@ class Relays:
             return False
 
     def override(self, relay, minutes=30):
-        self.relays[relay]['override'] = datetime.datetime.utcnow() + datetime.timedelta(minutes=minutes)
+        self.relays[relay]['override'] = datetime.datetime.now() + datetime.timedelta(minutes=minutes)
 
     def toggle(self, relay):
         self.override(relay)
@@ -127,6 +128,7 @@ class Relays:
                 "override": r.get("override", ""),
 
             }
+            print(status['override'])
             index = index + 1
             statuses.append(status)
         return statuses
@@ -134,8 +136,9 @@ class Relays:
 
     def quit(self):
             print("cleanup gpio")
-            GPIO.cleanup()
             self.runLoop = False
+            time.sleep(1)
+            GPIO.cleanup()
 
 
 def start():
@@ -145,13 +148,6 @@ def start():
 def end():
     rrrr.quit()
     t.join()
-    sys.exit(0)
-
-def exit_handler():
-    print("Quitting")
-    rrrr.quit()
-    t.join()
-    sys.exit(0)
 
 def get_relays():
     return rrrr
@@ -162,7 +158,7 @@ def main():
 
 rrrr = Relays()
 t = threading.Thread(target=rrrr.go, name="Relay Thread", args=[])
-atexit.register(exit_handler)
+
 if __name__ == '__main__':
     t = threading.Thread(target=rrrr.go, name="Relay Thread", args=[])
     t.start()
