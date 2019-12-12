@@ -13,4 +13,5 @@ urlpatterns = [
     path('<int:relay_id>/on', views.on, name='on'),
     path('<int:relay_id>/off', views.off, name='off'),
     path('<int:relay_id>/toggle', views.toggle, name='toggle'),
+    path('schedule', views.schedule, name='schedule'),
 ]

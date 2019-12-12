@@ -3,7 +3,7 @@
   pin: 5
   inverted: true
   events:
-    - start: 8000
+    - start: 0800
       end: 1100
     - start: 1230
       end: 1600
@@ -13,7 +13,7 @@
   name: 2 big fan
   pin: 6
   events:
-    - start: 8000
+    - start: 0800
       end: 1100
     - start: 1230
       end: 1600
@@ -53,11 +53,5 @@
   name: switch 6 heater
   pin: 20
   events:
-    - start: 0002
-      end: 1100
-    - start: 1102
-      end: 1600
-    - start: 1602
-      end: 1900
-    - start: 1902
-      end: 2359
+    - start: 0001
+      end: 0002

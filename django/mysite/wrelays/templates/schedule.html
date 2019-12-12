@@ -20,22 +20,16 @@
         <ul class="list-group">
             {% for r in relays %}
             <li class="list-group-item list-group-item-action">
-                <a href="{% url 'wrelays:toggle' r.index %}">
-                    <div>
-                        {% if r.is_on %}
-                        <img height=25px src="{% static "on.png" %}" alt="on">
-                        {% else %}
-                        <img height=25px src="{% static "off.png" %}" alt="off">
-                        {% endif %}
-                        {{r.name}}
-                        {% if r.override %}
-                        <div class="float-right">override until {{r.override}}</div>
-                        {% endif %}
-                    </div>
+                    <div> {{ r.name }} </div>
+                    {% for e in r.events %}
+                        <div> {{ e.start }} {{ e.end }} </div>
+                    {% endfor %}
             </li>
             {% endfor %}
         </ul>
     </div>
+
+    
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

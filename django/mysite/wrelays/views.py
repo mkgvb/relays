@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from relays import relays
 import json
@@ -39,4 +39,10 @@ def off(request, relay_id):
 def toggle(request, relay_id):
     r.toggle(relay_id)
     return redirect('/')
+
+def schedule(request):
+    #return JsonResponse(relays.loadConfig(), safe=False)
+    obj = {}
+    obj['relays'] = relays.loadConfig()
+    return render(request, 'schedule.html', context=obj)
     
