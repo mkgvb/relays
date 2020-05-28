@@ -7,13 +7,15 @@ import datetime
 import threading
 import sys
 import atexit
+import os
 
 GPIO.cleanup()
 ON = GPIO.LOW
 OFF = GPIO.HIGH
+config_file = "/home/pi/relays/module/relays/config.yml"
 
 def loadConfig():
-    with open("/home/pi/relays/module/relays/config.yml", "r") as stream:
+    with open(config_file, "r") as stream:
         try:
             relays = yaml.safe_load(stream)
             return relays
@@ -42,7 +44,13 @@ class Relays:
     def go(self):
         # try:
         minute = 0
+        lastConfigChange = os.stat(config_file).st_mtime
         while self.runLoop:
+            #check if config file has changed
+            if not lastConfigChange == os.stat(config_file).st_mtime:
+                print("Config change detected, this will be messed up if any GPIO pins change")
+                self.relays = loadConfig()
+                lastConfigChange = os.stat(config_file).st_mtime
             if not minute == datetime.datetime.now().minute:
                 print("-------------------------------------------")
                 print(datetime.datetime.now().strftime("%H:%M:%S"))

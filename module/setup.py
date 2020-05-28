@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name="relays",
     packages=["relays"],
-    version="DEVELOPMENT",
+    version="1.0.0-dev",
     description="scripts",
     author="Mike Gracia",
     include_package_data=True,
