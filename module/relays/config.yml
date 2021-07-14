@@ -41,7 +41,9 @@
   name: 5 co2
   pin: 26
   events:
-    - start: 1100
+          #    - start: 1100
+          #end: 1558
+    - start: 1200
       end: 1558
     - start: 1605
       end: 1800

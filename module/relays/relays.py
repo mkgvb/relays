@@ -85,6 +85,17 @@ class Relays:
             
             #GPIO.input(i['pin']) This gives the current state of the pin 0 is on 1 is off
 
+    def test(self):
+        """Turns all the relays on and then off"""
+        for i in self.relays:
+            GPIO.output(i["pin"], ON)
+            time.sleep(1)
+        time.sleep(2)
+        for i in self.relays:
+            GPIO.output(i["pin"], OFF)
+            time.sleep(1)
+
+
 
     def _removeExpiredOverrides(self):
         now = datetime.datetime.now()
@@ -165,6 +176,7 @@ def main():
 
 
 rrrr = Relays()
+rrrr.test()
 t = threading.Thread(target=rrrr.go, name="Relay Thread", args=[])
 
 if __name__ == '__main__':
